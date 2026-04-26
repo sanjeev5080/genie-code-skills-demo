@@ -30,7 +30,7 @@ Every table MUST have `TBLPROPERTIES` with at minimum:
 ```sql
 TBLPROPERTIES (
   "quality" = "<bronze|silver|gold>",
-  "owner" = "<team-or-domain>",
+  "team" = "<team-or-domain>",
   "domain" = "<business-domain>"
 )
 ```
@@ -48,7 +48,9 @@ Additional required properties by context:
 
 ### Column Descriptions via ALTER TABLE
 
-After creating a table, add column descriptions for key columns using `ALTER TABLE`:
+> **IMPORTANT — Do NOT place ALTER TABLE statements inside pipeline `.sql` files.** The SDP pipeline parser will fail on them. These statements must be run **separately** in a Databricks SQL editor or notebook **after** the pipeline has successfully created the tables.
+
+After the pipeline runs, add column descriptions for key columns using `ALTER TABLE`:
 
 ```sql
 ALTER TABLE <catalog>.<schema>.silver_customers
@@ -90,7 +92,7 @@ Tables containing personal data require additional governance:
 1. **TBLPROPERTIES** must include `"contains_pii" = "true"` and `"pii_columns"` listing all PII column names
 2. **COMMENT** must include `CONTAINS PII: <column_list>`
 3. **Column descriptions** for PII columns must note the PII type and risk level
-4. **Unity Catalog tags** should be applied where supported:
+4. **Unity Catalog tags** should be applied where supported — run this **separately in a SQL editor after the pipeline runs**, not inside the pipeline `.sql` file:
 
 ```sql
 ALTER TABLE <catalog>.<schema>.bronze_customers
@@ -115,7 +117,7 @@ Use tags for discoverability and governance automation:
 Before completing any table definition, verify ALL of the following:
 
 - [ ] `COMMENT` clause is present and descriptive
-- [ ] `TBLPROPERTIES` includes at least `quality` and `owner`
+- [ ] `TBLPROPERTIES` includes at least `quality`, `team`, and `domain`
 - [ ] If PII is present: `contains_pii` and `pii_columns` are in TBLPROPERTIES
 - [ ] If PII is present: COMMENT mentions `CONTAINS PII`
 - [ ] Column descriptions added for primary keys, derived columns, and PII columns
@@ -124,6 +126,8 @@ Before completing any table definition, verify ALL of the following:
 
 ## Example: Full Governance Application
 
+**Step 1 — Pipeline `.sql` file** (this goes in your SDP pipeline):
+
 ```sql
 CREATE OR REFRESH MATERIALIZED VIEW silver_customers(
   CONSTRAINT valid_customer_id EXPECT (customer_id IS NOT NULL) ON VIOLATION FAIL UPDATE
@@ -131,7 +135,7 @@ CREATE OR REFRESH MATERIALIZED VIEW silver_customers(
 COMMENT "Cleaned customer data with derived tiers from bronze_customers - CONTAINS PII: email_hash, phone_masked, age"
 TBLPROPERTIES (
   "quality" = "silver",
-  "owner" = "data-engineering",
+  "team" = "data-engineering",
   "domain" = "customer",
   "contains_pii" = "true",
   "pii_columns" = "email_hash,phone_masked,age",
@@ -156,9 +160,13 @@ AS SELECT
   END AS data_quality_flag,
   current_timestamp() AS audit_timestamp,
   'crm_system' AS source_system
-FROM LIVE.bronze_customers;
+FROM bronze_customers;
+```
 
-ALTER TABLE silver_customers
+**Step 2 — Run separately in a SQL editor or notebook** (after the pipeline has run and created the table):
+
+```sql
+ALTER TABLE <catalog>.<schema>.silver_customers
   ALTER COLUMN customer_id COMMENT 'Unique customer identifier from CRM',
   ALTER COLUMN email_hash COMMENT 'SHA-256 hash of lowercase trimmed email for matching without PII exposure',
   ALTER COLUMN phone_masked COMMENT 'Last 4 digits of phone number, masked for PII protection',
@@ -166,6 +174,6 @@ ALTER TABLE silver_customers
   ALTER COLUMN income_tier COMMENT 'Derived income bracket: High Income / Upper Middle / Middle / Lower Middle',
   ALTER COLUMN data_quality_flag COMMENT 'Row-level DQ status: CLEAN or MISSING_CUSTOMER_ID';
 
-ALTER TABLE silver_customers
+ALTER TABLE <catalog>.<schema>.silver_customers
   SET TAGS ('pii' = 'true', 'data_classification' = 'confidential', 'domain' = 'customer');
 ```

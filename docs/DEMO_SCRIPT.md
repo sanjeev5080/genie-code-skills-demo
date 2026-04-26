@@ -103,6 +103,8 @@ skills/data_eng/              (repo)        →   Workspace/.assistant/skills/  
 
 Or upload to user level at `/Users/{username}/.assistant/skills/` for a personal demo.
 
+> **Note:** The folder name becomes the `@tag` name in Genie Code prompts. For example, uploading the `sdp-basics/` folder means you reference it as `@sdp-basics` in your prompt. Genie Code loads and applies that folder's `SKILL.md` when it sees the tag.
+
 ### Prompts
 
 Start a **new** Genie Code session (to clear context from Stage 1):
