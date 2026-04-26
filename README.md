@@ -72,15 +72,18 @@ Connect a GitHub MCP server that points to the same skills in this repo. Add cus
 
 ### 1. Install Skills
 
-Copy the skill files from `skills/data_eng/` to your Databricks workspace:
+Copy the skill folders from `skills/data_eng/` to your Databricks workspace. The repo structure matches the workspace structure exactly — copy as-is:
 
 ```
 Workspace/
   .assistant/
     skills/
-      table-governance.md
-      sdp-basics.md
-      pii-management.md
+      table-governance/
+        SKILL.md
+      sdp-basics/
+        SKILL.md
+      pii-management/
+        SKILL.md
 ```
 
 Skills can be installed at the workspace level (`Workspace/.assistant/skills/`) or user level (`/Users/{username}/.assistant/skills/`).
@@ -181,9 +184,12 @@ genie-code-skills-demo/
 │   └── branch-conventions.md
 ├── skills/
 │   └── data_eng/                           # Data engineering skills (also served via MCP)
-│       ├── table-governance.md             # Table/column documentation, UC tags, PII labeling
-│       ├── sdp-basics.md                   # SDP naming, audit columns, TBLPROPERTIES
-│       └── pii-management.md               # PII detection and labelling
+│       ├── table-governance/
+│       │   └── SKILL.md                    # Table/column documentation, UC tags, PII labeling
+│       ├── sdp-basics/
+│       │   └── SKILL.md                    # SDP naming, audit columns, TBLPROPERTIES
+│       └── pii-management/
+│           └── SKILL.md                    # PII detection and labelling
 ├── instructions/                           # Instruction TEMPLATES (with placeholders)
 │   ├── .assistant_instructions.md          # User-level template
 │   └── .assistant_workspace_instructions.md # Workspace-level template

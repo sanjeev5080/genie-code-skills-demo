@@ -25,7 +25,6 @@ Never use PascalCase, UPPERCASE, kebab-case, or camelCase. Never omit the layer 
 |------|-------------|--------|
 | `STREAMING TABLE` | File ingestion (Auto Loader), CDC, real-time data | `CREATE OR REFRESH STREAMING TABLE` |
 | `MATERIALIZED VIEW` | Batch data from existing Delta tables, aggregations | `CREATE OR REFRESH MATERIALIZED VIEW` |
-| `LIVE.table_name` | Referencing tables within the same pipeline | `FROM LIVE.bronze_articles` |
 
 ## Comments
 
@@ -100,8 +99,7 @@ Add `CLUSTER BY AUTO` for `STREAMING TABLE` definitions.
 
 ## Joins
 
-- Use `LIVE.table_name` to reference tables within the same pipeline
-- Use fully qualified names for tables outside the pipeline
+- Use fully qualified names to reference tables (e.g. `catalog.schema.table_name`)
 - Always use explicit `JOIN` syntax with table aliases
 
 ## Example
