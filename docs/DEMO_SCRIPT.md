@@ -55,7 +55,7 @@ Open Genie Code in Agent mode inside a pipeline and run these prompts:
 
 Point out what's **missing** from the generated code:
 
-- [ ] No `bronze_` / `silver_` layer prefix in table names
+- [ ] No `bronze_nokia_` / `silver_nokia_` layer prefix in table names
 - [ ] No `COMMENT` clause on the table
 - [ ] No `TBLPROPERTIES` (`quality`, `owner`, `domain`)
 - [ ] No `audit_timestamp` or `source_system` columns
