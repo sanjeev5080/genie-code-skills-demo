@@ -13,9 +13,9 @@ All table names MUST use `lowercase_snake_case` with a layer prefix:
 
 | Layer | Prefix | Example |
 |-------|--------|---------|
-| Bronze | `bronze_nokia_` | `bronze_transactions` |
-| Silver | `silver_nokia_` | `silver_customers` |
-| Gold | `gold_nokia_` | `gold_daily_revenue` |
+| Bronze | `bronze_nokia_` | `bronze_nokia_transactions` |
+| Silver | `silver_nokia_` | `silver_nokia_customers` |
+| Gold | `gold_nokia_` | `gold_nokia_daily_revenue` |
 
 Never use PascalCase, UPPERCASE, kebab-case, or camelCase. Never omit the layer prefix.
 
