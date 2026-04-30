@@ -93,12 +93,12 @@ Upload the three skill folders from `skills/data_eng/` to your workspace. The re
 
 ```
 skills/data_eng/              (repo)        →   Workspace/.assistant/skills/   (workspace)
-  table-governance/                               table-governance/
-    SKILL.md                                        SKILL.md
-  sdp-basics/                                    sdp-basics/
-    SKILL.md                                        SKILL.md
-  pii-management/                                pii-management/
-    SKILL.md                                        SKILL.md
+  table-governance.md                            table-governance/
+                                                      SKILL.md
+  sdp-basics.md                                  sdp-basics/
+                                                    SKILL.md
+  pii-management.md                              pii-management/
+                                                    SKILL.md
 ```
 
 Or upload to user level at `/Users/{username}/.assistant/skills/` for a personal demo.
