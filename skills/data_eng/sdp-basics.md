@@ -6,6 +6,7 @@ description: Apply basic SDP pipeline best practices for table naming, comments,
 # SDP Pipeline Basics
 
 Always build SDP pipelines using Python (not SQL). When creating or modifying tables in SDP pipelines, follow these rules.
+Mandatory: silver and gold artifacts should go in same directory and bronze in separate
 
 ## Table Naming
 
