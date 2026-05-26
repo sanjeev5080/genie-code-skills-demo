@@ -15,7 +15,7 @@ All table names MUST use `lowercase_snake_case` with a layer prefix:
 
 | Layer | Prefix | Example |
 |-------|--------|---------|
-| Bronze | `bronze_sandvik_historical_` | `bronze_sandvik_transactions` |
+| Bronze | `bronze_sandvik_` | `bronze_sandvik_transactions` |
 | Silver | `silver_sandvik_` | `silver_sandvik_customers` |
 | Gold | `gold_sandvik_` | `gold_nokia_sandvik_revenue` |
 
