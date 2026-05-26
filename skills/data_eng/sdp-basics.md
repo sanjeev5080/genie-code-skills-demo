@@ -7,7 +7,16 @@ description: Apply basic SDP pipeline best practices for table naming, comments,
 
 Always build SDP pipelines using Python (not SQL). When creating or modifying tables in SDP pipelines, follow these rules.
 
-Mandatory: silver and gold artifacts should go in same directory and bronze in separate
+Mandatory: silver and gold artifacts should go in same directory and bronze in separate, always enforce our internal information classifcation tags on column level
+
+## Column tagging
+
+All columns must follow information classification tags dependant on the data in the column
+i1: public, information available to the public
+i2: internal, internal information that can be shared to others
+i3: restricted, should only be shared on a must know basis
+i4: secret, most secret and confidential information
+pii: personally identifiable information
 
 ## Table Naming
 
